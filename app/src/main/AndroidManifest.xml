@@ -24,6 +24,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="io.vladshablinsky.passwordmanager.MainActivity" />
         </activity>
+        <activity
+            android:name=".AddSheetActivity"
+            android:label="@string/title_activity_add_sheet" >
+        </activity>
     </application>
 
 </manifest>

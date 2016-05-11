@@ -101,10 +101,11 @@ public class EntryDAO {
     public List<Entry> getEntriesOfSheet(long sheetId) {
         List<Entry> listEntries = new ArrayList<>();
 
+        // TODO CHECK TWICE COLUMN_ENTRY_SHEED_ID!!!!
         Cursor cursor = mDatabase.query(
                 DBHandler.TABLE_ENTRIES,
                 mAllColumns,
-                DBHandler.COLUMN_SHEET_ID + " = ?",
+                DBHandler.COLUMN_ENTRY_SHEET_ID + " = ?",
                 new String[] { String.valueOf(sheetId) },
                 null,
                 null,
