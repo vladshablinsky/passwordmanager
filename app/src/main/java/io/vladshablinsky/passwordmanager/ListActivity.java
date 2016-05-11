@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -24,6 +25,7 @@ public class ListActivity extends ActionBarActivity {
     private List<Entry> listEntries;
     private EntryDAO entryDAO;
     private long sheetId;
+    private ListEntriesAdapter adapter;
 
     public static final int REQUEST_CODE_ADD_ENTRY = 40;
     public static final String EXTRA_ADDED_ENTRY = "extra_key_added_entry";
@@ -56,6 +58,11 @@ public class ListActivity extends ActionBarActivity {
             listEntries = entryDAO.getEntriesOfSheet(sheetId);
             if (listEntries != null && !listEntries.isEmpty()) {
                 // TODO implement adaptor for passwords
+                adapter = new ListEntriesAdapter(this, listEntries);
+                listViewEntries.setAdapter(adapter);
+
+                textEmptyListEntries.setVisibility(View.GONE);
+                listViewEntries.setVisibility(View.VISIBLE);
             }
             else {
                 textEmptyListEntries.setVisibility(View.VISIBLE);
@@ -80,11 +87,52 @@ public class ListActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        switch (id) {
+            case R.id.action_add_entry:
+                Intent intent = new Intent(this, AddEntryActivity.class);
+                intent.putExtra(AddEntryActivity.EXTRA_SELECTED_SHEET_ID, sheetId);
+                startActivityForResult(intent, REQUEST_CODE_ADD_ENTRY);
+                break;
+        }
+
+
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_ADD_ENTRY) {
+            if (resultCode == RESULT_OK) {
+                if (listEntries == null) {
+                    listEntries = new ArrayList<Entry>();
+                }
+
+                if (entryDAO == null) {
+                    entryDAO = new EntryDAO(this);
+                }
+                listEntries = entryDAO.getEntriesOfSheet(sheetId);
+
+                if (adapter == null) {
+                    adapter = new ListEntriesAdapter(this, listEntries);
+                    listViewEntries.setAdapter(adapter);
+
+                    if(listViewEntries.getVisibility() != View.VISIBLE) {
+                        textEmptyListEntries.setVisibility(View.GONE);
+                        listViewEntries.setVisibility(View.VISIBLE);
+                    }
+                }
+                else {
+                    adapter.setItems(listEntries);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

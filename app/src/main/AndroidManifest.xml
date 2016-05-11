@@ -28,6 +28,10 @@
             android:name=".AddSheetActivity"
             android:label="@string/title_activity_add_sheet" >
         </activity>
+        <activity
+            android:name=".AddEntryActivity"
+            android:label="@string/title_activity_add_entry" >
+        </activity>
     </application>
 
 </manifest>

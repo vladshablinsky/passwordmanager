@@ -5,4 +5,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_list">ListActivity</string>
     <string name="title_activity_add_sheet">AddSheetActivity</string>
+    <string name="title_activity_add_entry">AddEntryActivity</string>
+    <string name="empty_entries_list">Entry list is empty use add button to add some.</string>
+    <string name="empty_sheets_list">There are no sheets int the list. Use add button to create one.</string>
 </resources>

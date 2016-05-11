@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,59 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
+        this.listViewSheets.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Sheet clickedSheet = adapter.getItem(position);
+                showDeleteDialogConfirmation(clickedSheet);
+                return true;
+            }
+        });
+    }
+
+    private void showDeleteDialogConfirmation(final Sheet clickedSheet) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+        alertDialogBuilder.setTitle("Delete");
+        alertDialogBuilder.setMessage("Are you sure you want to delete the \""+clickedSheet.getName()+"\" sheet ?");
+
+        // set positive button YES message
+        alertDialogBuilder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // delete the company and refresh the list
+                if(sheetDAO != null) {
+                    sheetDAO.deleteSheet(clickedSheet);
+                    listSheets.remove(clickedSheet);
+
+                    //refresh the listView
+                    if(listSheets.isEmpty()) {
+                        listViewSheets.setVisibility(View.GONE);
+                        textEmptyListSheets.setVisibility(View.VISIBLE);
+                    }
+                    adapter.setItems(listSheets);
+                    adapter.notifyDataSetChanged();
+                }
+
+                dialog.dismiss();
+                Toast.makeText(MainActivity.this, "Sheet was deleted", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // set neutral button OK
+        alertDialogBuilder.setNeutralButton(android.R.string.no, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Dismiss the dialog
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        // show alert
+        alertDialog.show();
     }
 
 
@@ -51,12 +105,13 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initViews();
+        sheetDAO = new SheetDAO(this);
 
+        initViews();
         System.out.println("AFTER INIT VIEWS");
 
         // fill the listView
-        sheetDAO = new SheetDAO(this);
+
         listSheets = sheetDAO.getAllSheets();
         if ((listSheets != null) && !listSheets.isEmpty()) {
             adapter = new ListSheetsAdapter(this, listSheets);

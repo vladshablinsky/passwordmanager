@@ -1,0 +1,79 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="io.vladshablinsky.passwordmanager.AddEntryActivity"
+    android:id="@+id/addEntry">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Entry name"
+        android:id="@+id/textEntryName"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/editEntryName"
+        android:layout_alignStart="@+id/editEntryName"
+        android:layout_marginTop="42dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editEntryName"
+        android:layout_below="@+id/textEntryName"
+        android:layout_centerHorizontal="true"
+        android:autoText="false" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Description"
+        android:id="@+id/textEntryDescription"
+        android:layout_below="@+id/editEntryName"
+        android:layout_alignLeft="@+id/editEntryName"
+        android:layout_alignStart="@+id/editEntryName" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editEntryDescription"
+        android:layout_below="@+id/textEntryDescription"
+        android:layout_alignLeft="@+id/textEntryDescription"
+        android:layout_alignStart="@+id/textEntryDescription" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Password"
+        android:id="@+id/textEntryPass"
+        android:layout_below="@+id/editEntryDescription"
+        android:layout_alignLeft="@+id/editEntryDescription"
+        android:layout_alignStart="@+id/editEntryDescription" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editEntryPass"
+        android:layout_below="@+id/textEntryPass"
+        android:layout_alignLeft="@+id/textEntryPass"
+        android:layout_alignStart="@+id/textEntryPass" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Entry"
+        android:id="@+id/addEntryButton"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="118dp" />
+</RelativeLayout>
