@@ -5,6 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.google.common.hash.Hashing;
+
+import java.nio.charset.Charset;
+import java.security.MessageDigest;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +19,7 @@ import java.util.List;
 public class SheetDAO {
 
     // Database fields
+    public static final String SHEET_EMPTY_PASS = "empty";
     private SQLiteDatabase mDatabase;
     private DBHandler mDbHandler;
     private Context mContext;
@@ -45,7 +50,7 @@ public class SheetDAO {
     public Sheet createSheet(String name, String pass) {
         ContentValues values = new ContentValues();
         values.put(DBHandler.COLUMN_SHEET_NAME, name);
-        values.put(DBHandler.COLUMN_SHEET_PASS, pass);
+        values.put(DBHandler.COLUMN_SHEET_PASS, Hashing.sha1().hashString(pass, Charset.defaultCharset()).toString());
 
         long insertId = mDatabase
                 .insert(
@@ -72,7 +77,7 @@ public class SheetDAO {
     public void deleteSheet(Sheet sheet) {
         long id = sheet.getId();
         // delete all entries of this sheet
-        EntryDAO entryDao = new EntryDAO(mContext);
+        EntryDAO entryDao = new EntryDAO(mContext, SHEET_EMPTY_PASS);
         List<Entry> listEntries = entryDao.getEntriesOfSheet(id);
         if (listEntries != null && !listEntries.isEmpty()) {
             for (Entry e : listEntries) {

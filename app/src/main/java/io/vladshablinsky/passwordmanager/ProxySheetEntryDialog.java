@@ -13,6 +13,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.common.hash.Hashing;
+
+import java.nio.charset.Charset;
+
 /**
  * Created by vlad on 5/13/16.
  */
@@ -60,10 +64,12 @@ public class ProxySheetEntryDialog extends DialogFragment {
                 Editable masterPass = editMasterPass.getText();
 
                 if (!TextUtils.isEmpty(masterPass)) {
-                    if (masterPass.toString().equals(currentSheet.getPass())) {
+                    String sha1Hash = Hashing.sha1().hashString(masterPass.toString(), Charset.defaultCharset()).toString();
+                    if (sha1Hash.equals(currentSheet.getPass())) {
                         MainActivity callingActivity = (MainActivity) getActivity();
                         Intent intent = new Intent(callingActivity, ListActivity.class);
                         intent.putExtra(ListActivity.EXTRA_SELECTED_SHEET_ID, currentSheet.getId());
+                        intent.putExtra(ListActivity.EXTRA_SHEET_MASTER_PASS, masterPass.toString());
                         dismiss();
                         startActivity(intent);
                     } else {

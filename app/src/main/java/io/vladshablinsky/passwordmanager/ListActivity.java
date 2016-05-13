@@ -38,11 +38,13 @@ public class ListActivity extends ActionBarActivity
     private List<Entry> listEntries;
     private EntryDAO entryDAO;
     private long sheetId;
+    private String sheetPass;
     private ListEntriesAdapter adapter;
 
     public static final int REQUEST_CODE_ADD_ENTRY = 40;
     public static final String EXTRA_ADDED_ENTRY = "extra_key_added_entry";
     public static final String EXTRA_SELECTED_SHEET_ID = "extra_key_selected_sheet_id";
+    public static final String EXTRA_SHEET_MASTER_PASS = "extra_sheet_master_pass";
 
     private void initViews() {
         // add listeners here and other things.
@@ -70,12 +72,14 @@ public class ListActivity extends ActionBarActivity
 
         initViews();
 
-        entryDAO = new EntryDAO(this);
         Intent intent = getIntent();
 
         if (intent != null) {
             this.sheetId = intent.getLongExtra(EXTRA_SELECTED_SHEET_ID, -1);
+            this.sheetPass = intent.getStringExtra(EXTRA_SHEET_MASTER_PASS);
         }
+
+        entryDAO = new EntryDAO(this, sheetPass);
 
         if (sheetId != -1) {
             listEntries = entryDAO.getEntriesOfSheet(sheetId);
@@ -125,6 +129,7 @@ public class ListActivity extends ActionBarActivity
             case R.id.action_add_entry:
                 Intent intent = new Intent(this, AddEntryActivity.class);
                 intent.putExtra(AddEntryActivity.EXTRA_SELECTED_SHEET_ID, sheetId);
+                intent.putExtra(AddEntryActivity.EXTRA_SELECTED_MASTER_PASS, sheetPass);
                 startActivityForResult(intent, REQUEST_CODE_ADD_ENTRY);
                 break;
         }
@@ -147,7 +152,7 @@ public class ListActivity extends ActionBarActivity
                 }
 
                 if (entryDAO == null) {
-                    entryDAO = new EntryDAO(this);
+                    entryDAO = new EntryDAO(this, sheetPass);
                 }
                 listEntries = entryDAO.getEntriesOfSheet(sheetId);
 

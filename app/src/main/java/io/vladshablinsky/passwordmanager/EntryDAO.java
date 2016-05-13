@@ -24,9 +24,11 @@ public class EntryDAO {
             DBHandler.COLUMN_ENTRY_PASS,
             DBHandler.COLUMN_ENTRY_SHEET_ID
     };
+    private final String sheetPass;
 
-    public EntryDAO(Context context) {
+    public EntryDAO(Context context, String sheetPass) {
         mDbHandler = new DBHandler(context);
+        this.sheetPass = sheetPass;
         this.mContext = context;
         try {
             open();
@@ -46,7 +48,7 @@ public class EntryDAO {
     public Entry createEntry(String name, String pass, long sheetId) {
         ContentValues values = new ContentValues();
         values.put(DBHandler.COLUMN_ENTRY_NAME, name);
-        values.put(DBHandler.COLUMN_ENTRY_PASS, pass);
+        values.put(DBHandler.COLUMN_ENTRY_PASS, Encryptor.encryptWithKey(sheetPass, pass));
         values.put(DBHandler.COLUMN_ENTRY_SHEET_ID, sheetId);
         long insertId = mDatabase
                 .insert(DBHandler.TABLE_ENTRIES, null, values);
@@ -80,7 +82,7 @@ public class EntryDAO {
         ContentValues cv = new ContentValues();
 
         cv.put(DBHandler.COLUMN_ENTRY_NAME, newEntry.getName());
-        cv.put(DBHandler.COLUMN_ENTRY_PASS, newEntry.getPass());
+        cv.put(DBHandler.COLUMN_ENTRY_PASS, Encryptor.encryptWithKey(sheetPass, newEntry.getPass()));
         cv.put(DBHandler.COLUMN_ENTRY_SHEET_ID, newEntry.getSheetId());
         int result = mDatabase.update(DBHandler.TABLE_ENTRIES, cv, DBHandler.COLUMN_ENTRY_ID + " = " + id, null);
     }
@@ -100,8 +102,8 @@ public class EntryDAO {
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            Entry employee = cursorToEntry(cursor);
-            listEntries.add(employee);
+            Entry entry = cursorToEntry(cursor);
+            listEntries.add(entry);
             cursor.moveToNext();
         }
 
@@ -139,7 +141,7 @@ public class EntryDAO {
         Entry entry = new Entry();
         entry.setId(cursor.getLong(0));
         entry.setName(cursor.getString(1));
-        entry.setPass(cursor.getString(2));
+        entry.setPass(Encryptor.decryptWithKey(sheetPass, cursor.getString(2)));
 
         long sheetId = cursor.getLong(3);
         SheetDAO dao = new SheetDAO(mContext);

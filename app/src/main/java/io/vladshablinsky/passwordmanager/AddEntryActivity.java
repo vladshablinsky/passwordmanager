@@ -23,8 +23,10 @@ public class AddEntryActivity extends ActionBarActivity {
     private EntryDAO entryDAO;
 
     private long entrySheetId;
+    private String sheetPass;
 
     public static final String EXTRA_SELECTED_SHEET_ID = "extra_key_selected_entry_sheet_id";
+    public static final String EXTRA_SELECTED_MASTER_PASS = "extra_selected_sheet";
 
     // private Entry selectedEntry;
 
@@ -34,12 +36,13 @@ public class AddEntryActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_entry);
 
-        entryDAO = new EntryDAO(this);
-
         final Intent intent = getIntent();
         if (intent != null) {
             this.entrySheetId = intent.getLongExtra(EXTRA_SELECTED_SHEET_ID, -1);
+            this.sheetPass = intent.getStringExtra(EXTRA_SELECTED_MASTER_PASS);
         }
+
+        entryDAO = new EntryDAO(this, sheetPass);
 
         this.editEntryName = (EditText) findViewById(R.id.editEntryName);
         this.editEntryDescription = (EditText) findViewById(R.id.editEntryDescription);
