@@ -1,12 +1,16 @@
 package io.vladshablinsky.passwordmanager;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
+//import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +41,15 @@ public class ListActivity extends ActionBarActivity {
         this.textEmptyListEntries = (TextView) findViewById(R.id.textViewEntries);
         // same for empty text
         // add listeners to the listView itself
-
+        this.listViewEntries.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Entry clickedEntry = adapter.getItem(position);
+                EntryDialog entryDialog = EntryDialog.newInstance(clickedEntry);
+                entryDialog.show(getFragmentManager(), "abacaba");
+                return true;
+            }
+        });
     }
 
     @Override
@@ -69,6 +81,8 @@ public class ListActivity extends ActionBarActivity {
                 listViewEntries.setVisibility(View.GONE);
             }
         }
+
+
 
     }
 
@@ -120,19 +134,37 @@ public class ListActivity extends ActionBarActivity {
                 if (adapter == null) {
                     adapter = new ListEntriesAdapter(this, listEntries);
                     listViewEntries.setAdapter(adapter);
-
-                    if(listViewEntries.getVisibility() != View.VISIBLE) {
-                        textEmptyListEntries.setVisibility(View.GONE);
-                        listViewEntries.setVisibility(View.VISIBLE);
-                    }
-                }
-                else {
+                } else {
                     adapter.setItems(listEntries);
-                    adapter.notifyDataSetChanged();
                 }
+                if(listViewEntries.getVisibility() != View.VISIBLE) {
+                    textEmptyListEntries.setVisibility(View.GONE);
+                    listViewEntries.setVisibility(View.VISIBLE);
+                }
+                adapter.notifyDataSetChanged();
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    public EntryDAO getEntryDAO() {
+        return entryDAO;
+    }
+
+    public List<Entry> getListEntries() {
+        return listEntries;
+    }
+
+    public TextView getTextEmptyListEntries() {
+        return textEmptyListEntries;
+    }
+
+    public ListView getListViewEntries() {
+        return listViewEntries;
+    }
+
+    public ListEntriesAdapter getAdapter() {
+        return adapter;
     }
 }

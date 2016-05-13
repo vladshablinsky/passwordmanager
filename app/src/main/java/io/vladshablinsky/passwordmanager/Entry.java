@@ -7,8 +7,9 @@ import java.io.Serializable;
  */
 public class Entry implements Serializable {
     private long id;
-    private long sheetId;
     private String name;
+    private String pass;
+    private long sheetId;
     private Sheet sheet;
 
     public Sheet getSheet() {
@@ -17,14 +18,15 @@ public class Entry implements Serializable {
 
     public void setSheet(Sheet sheet) {
         this.sheet = sheet;
+        this.sheetId = sheet.getId();
     }
 
 
 
-    public Entry(int id, int sheetId, String name) {
+    public Entry(long id, String name, String pass) {
         this.id = id;
-        this.sheetId = sheetId;
         this.name = name;
+        this.pass = pass;
     }
 
     public Entry() {
@@ -52,5 +54,17 @@ public class Entry implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
+
+    public long getSheetId() {
+        return sheetId;
     }
 }

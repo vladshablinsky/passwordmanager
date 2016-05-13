@@ -21,6 +21,7 @@ public class EntryDAO {
     private String[] mAllColumns = {
             DBHandler.COLUMN_ENTRY_ID,
             DBHandler.COLUMN_ENTRY_NAME,
+            DBHandler.COLUMN_ENTRY_PASS,
             DBHandler.COLUMN_ENTRY_SHEET_ID
     };
 
@@ -42,9 +43,10 @@ public class EntryDAO {
         mDbHandler.close();
     }
 
-    public Entry createEntry(String name, long sheetId) {
+    public Entry createEntry(String name, String pass, long sheetId) {
         ContentValues values = new ContentValues();
         values.put(DBHandler.COLUMN_ENTRY_NAME, name);
+        values.put(DBHandler.COLUMN_ENTRY_PASS, pass);
         values.put(DBHandler.COLUMN_ENTRY_SHEET_ID, sheetId);
         long insertId = mDatabase
                 .insert(DBHandler.TABLE_ENTRIES, null, values);
@@ -71,6 +73,16 @@ public class EntryDAO {
                 DBHandler.COLUMN_ENTRY_ID + " = " + id,
                 null
         );
+    }
+
+    public void modifyEntry(Entry entry, Entry newEntry) {
+        long id = entry.getId();
+        ContentValues cv = new ContentValues();
+
+        cv.put(DBHandler.COLUMN_ENTRY_NAME, newEntry.getName());
+        cv.put(DBHandler.COLUMN_ENTRY_PASS, newEntry.getPass());
+        cv.put(DBHandler.COLUMN_ENTRY_SHEET_ID, newEntry.getSheetId());
+        int result = mDatabase.update(DBHandler.TABLE_ENTRIES, cv, DBHandler.COLUMN_ENTRY_ID + " = " + id, null);
     }
 
     public List<Entry> getAllEntries() {
@@ -127,8 +139,9 @@ public class EntryDAO {
         Entry entry = new Entry();
         entry.setId(cursor.getLong(0));
         entry.setName(cursor.getString(1));
+        entry.setPass(cursor.getString(2));
 
-        long sheetId = cursor.getLong(2);
+        long sheetId = cursor.getLong(3);
         SheetDAO dao = new SheetDAO(mContext);
         Sheet sheet = dao.getSheetById(sheetId);
 

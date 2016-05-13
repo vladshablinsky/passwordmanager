@@ -37,10 +37,10 @@ public class MainActivity extends ActionBarActivity {
         this.listViewSheets.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // TODO ADD PROXY HERE
                 Sheet clickedSheet = adapter.getItem(position);
-                Intent intent = new Intent(MainActivity.this, ListActivity.class);
-                intent.putExtra(ListActivity.EXTRA_SELECTED_SHEET_ID, clickedSheet.getId());
-                startActivity(intent);
+                ProxySheetEntryDialog proxyDialog = ProxySheetEntryDialog.newInstance(clickedSheet);
+                proxyDialog.show(getFragmentManager(), "abacaba");
             }
         });
         this.listViewSheets.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -168,17 +168,20 @@ public class MainActivity extends ActionBarActivity {
                     listSheets.add(createdSheet);
 
                     if (adapter == null) {
-                        if(listViewSheets.getVisibility() != View.VISIBLE) {
-                            listViewSheets.setVisibility(View.VISIBLE);
-                            textEmptyListSheets.setVisibility(View.GONE);
-                        }
-
                         adapter = new ListSheetsAdapter(this, listSheets);
                         listViewSheets.setAdapter(adapter);
                     }
                     else {
                         adapter.setItems(listSheets);
                         adapter.notifyDataSetChanged();
+                    }
+
+                    if(listSheets.isEmpty()) {
+                        listViewSheets.setVisibility(View.GONE);
+                        textEmptyListSheets.setVisibility(View.VISIBLE);
+                    } else {
+                        listViewSheets.setVisibility(View.VISIBLE);
+                        textEmptyListSheets.setVisibility(View.GONE);
                     }
                 }
             }

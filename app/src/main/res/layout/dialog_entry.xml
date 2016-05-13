@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Modify Entry"
+        android:text="Password"
         android:gravity="center"
         android:id="@+id/textEntryDialog" />
 
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/editText"
+            android:id="@+id/editEntryText"
             android:layout_weight="1" />
     </LinearLayout>
 
@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Delete"
-            android:id="@+id/button"
+            android:id="@+id/buttonDelete"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
@@ -52,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cancel"
-            android:id="@+id/button2"
+            android:id="@+id/buttonCancel"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
 
@@ -60,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Update"
-            android:id="@+id/button3"
+            android:id="@+id/buttonUpdate"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />

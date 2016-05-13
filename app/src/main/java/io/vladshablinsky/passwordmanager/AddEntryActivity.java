@@ -59,6 +59,7 @@ public class AddEntryActivity extends ActionBarActivity {
                     // TODO ADD PASSWORD
                     Entry createdEntry = entryDAO.createEntry(
                             entryName.toString(),
+                            entryPass.toString(),
                             entrySheetId
                     );
                     setResult(RESULT_OK);

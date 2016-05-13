@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class DBHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
     private static final String DATABASE_NAME = "sheets.db";
 
     public static final String TABLE_SHEETS = "sheets";
@@ -20,6 +20,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String TABLE_ENTRIES = "entries";
     public static final String COLUMN_ENTRY_ID = "entry_id";
     public static final String COLUMN_ENTRY_NAME = "entry_name";
+    public static final String COLUMN_ENTRY_PASS = "entry_pass";
     public static final String COLUMN_ENTRY_SHEET_ID = "entry_sheet_id";
 
     private static final String SQL_CREATE_TABLE_SHEETS = "CREATE TABLE " + TABLE_SHEETS + " (" +
@@ -31,6 +32,7 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String SQL_CREATE_TABLE_ENTRIES = "CREATE TABLE " + TABLE_ENTRIES + " (" +
             COLUMN_ENTRY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COLUMN_ENTRY_NAME + " TEXT NOT NULL, " +
+            COLUMN_ENTRY_PASS + " TEXT NOT NULL, " +
             COLUMN_ENTRY_SHEET_ID + " INTEGER NOT NULL " +
             ");";
 

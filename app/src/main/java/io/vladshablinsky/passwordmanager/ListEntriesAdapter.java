@@ -76,8 +76,9 @@ public class ListEntriesAdapter extends BaseAdapter {
         Entry currentItem = getItem(position);
         if (currentItem != null) {
             holder.entryName.setText(currentItem.getName());
-            // add description
-            holder.entryPassword.setText(currentItem.getName());
+            // ADD DESCRIPTION
+            //holder.entryDescription.setText(currentItem);
+            holder.entryPassword.setText(currentItem.getPass());
         }
         return v;
     }
