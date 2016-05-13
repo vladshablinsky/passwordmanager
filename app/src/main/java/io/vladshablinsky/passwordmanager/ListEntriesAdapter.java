@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,10 +18,14 @@ import java.util.List;
 public class ListEntriesAdapter extends BaseAdapter {
 
     private List<Entry> items;
+    private List<Entry> originalItems;
     private LayoutInflater inflater;
+    private String lastFilter = "";
 
     public ListEntriesAdapter(Context context, List<Entry> listEntries) {
-        this.setItems(listEntries);
+        this.originalItems = listEntries;
+        this.items = new ArrayList<>();
+        this.items.addAll(listEntries);
         this.inflater = LayoutInflater.from(context);
     }
 
@@ -28,8 +33,31 @@ public class ListEntriesAdapter extends BaseAdapter {
         return items;
     }
 
+    public void setOriginalItems(List<Entry> originalItems) {
+        this.originalItems = originalItems;
+        this.items.clear();
+        this.items.addAll(originalItems);
+        filterData(lastFilter);
+    }
+
     public void setItems(List<Entry> items) {
         this.items = items;
+    }
+
+    public void updateItem(Entry item, Entry newItem) {
+        int foundIndex = originalItems.indexOf(item);
+        if (foundIndex != -1) {
+            originalItems.set(foundIndex, newItem);
+        }
+        foundIndex = items.indexOf(item);
+        if (foundIndex != -1) {
+            items.set(foundIndex, newItem);
+        }
+    }
+
+    public void deleteItem(Entry item) {
+        originalItems.remove(item);
+        items.remove(item);
     }
 
     @Override
@@ -81,6 +109,22 @@ public class ListEntriesAdapter extends BaseAdapter {
             holder.entryPassword.setText(currentItem.getPass());
         }
         return v;
+    }
+
+    public void filterData(String query) {
+        query = query.toLowerCase();
+        lastFilter = query;
+        items.clear();
+
+        if (query.isEmpty()) {
+            items.addAll(originalItems);
+        } else {
+            for (Entry curEntry: originalItems) {
+                if (curEntry.getName().toLowerCase().contains(query)) {
+                    items.add(curEntry);
+                }
+            }
+        }
     }
 
     class ViewHolder {

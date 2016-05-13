@@ -1,7 +1,10 @@
 package io.vladshablinsky.passwordmanager;
 
 import android.app.FragmentManager;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 //import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
@@ -10,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,10 +24,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ListActivity extends ActionBarActivity {
+public class ListActivity extends ActionBarActivity
+        implements SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 
     private ListView listViewEntries;
     private TextView textEmptyListEntries;
+
+    private SearchView searchView;
+    private SearchManager searchManager;
+    private MenuItem searchItem;
 
     // adapter
     private List<Entry> listEntries;
@@ -56,6 +65,8 @@ public class ListActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+
+        searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 
         initViews();
 
@@ -91,6 +102,15 @@ public class ListActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_list, menu);
+
+        searchItem = menu.findItem(R.id.action_search);
+        searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false);
+        searchView.setOnQueryTextListener(this);
+        searchView.setOnCloseListener(this);
+        searchView.requestFocus();
+
         return true;
     }
 
@@ -135,7 +155,7 @@ public class ListActivity extends ActionBarActivity {
                     adapter = new ListEntriesAdapter(this, listEntries);
                     listViewEntries.setAdapter(adapter);
                 } else {
-                    adapter.setItems(listEntries);
+                    adapter.setOriginalItems(listEntries);
                 }
                 if(listViewEntries.getVisibility() != View.VISIBLE) {
                     textEmptyListEntries.setVisibility(View.GONE);
@@ -166,5 +186,26 @@ public class ListActivity extends ActionBarActivity {
 
     public ListEntriesAdapter getAdapter() {
         return adapter;
+    }
+
+    @Override
+    public boolean onClose() {
+        adapter.filterData("");
+        adapter.notifyDataSetChanged();
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        adapter.filterData(query);
+        adapter.notifyDataSetChanged();
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        adapter.filterData(newText);
+        adapter.notifyDataSetChanged();
+        return false;
     }
 }

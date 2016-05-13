@@ -5,20 +5,18 @@
         android:orderInCategory="100" app:showAsAction="never" />
 
     <item
+        android:id="@+id/action_search"
+        android:orderInCategory="1"
+        android:title="@string/search"
+        android:icon="@drawable/ic_search"
+        app:actionViewClass="android.widget.SearchView"
+        app:showAsAction="ifRoom|collapseActionView"/>
+
+    <item
         android:id="@+id/action_add_sheet"
         android:icon="@drawable/ic_add"
         android:title="Add new sheet"
         android:orderInCategory="2"
         app:showAsAction="always"
         />
-
-    <item
-        android:id="@+id/action_search_sheet"
-        android:icon="@drawable/ic_search"
-        android:title="Search among sheets"
-        android:orderInCategory="1"
-        app:showAsAction="always"
-        />
-
-
 </menu>

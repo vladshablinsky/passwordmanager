@@ -1,8 +1,11 @@
 package io.vladshablinsky.passwordmanager;
 
 import android.app.AlertDialog;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,14 +16,19 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.SearchView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity
+        implements SearchView.OnQueryTextListener, SearchView.OnCloseListener {
     private ListView listViewSheets;
     private TextView textEmptyListSheets;
+    private SearchView searchView;
+    private SearchManager searchManager;
+    private MenuItem searchItem;
 
     // adapter
     private ListSheetsAdapter adapter;
@@ -74,7 +82,7 @@ public class MainActivity extends ActionBarActivity {
                         listViewSheets.setVisibility(View.GONE);
                         textEmptyListSheets.setVisibility(View.VISIBLE);
                     }
-                    adapter.setItems(listSheets);
+                    adapter.deleteItem(clickedSheet);
                     adapter.notifyDataSetChanged();
                 }
 
@@ -110,6 +118,8 @@ public class MainActivity extends ActionBarActivity {
         initViews();
         System.out.println("AFTER INIT VIEWS");
 
+        searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+
         // fill the listView
 
         listSheets = sheetDAO.getAllSheets();
@@ -131,6 +141,13 @@ public class MainActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        searchItem = menu.findItem(R.id.action_search);
+        searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false);
+        searchView.setOnQueryTextListener(this);
+        searchView.setOnCloseListener(this);
+        searchView.requestFocus();
         return true;
     }
 
@@ -172,9 +189,9 @@ public class MainActivity extends ActionBarActivity {
                         listViewSheets.setAdapter(adapter);
                     }
                     else {
-                        adapter.setItems(listSheets);
-                        adapter.notifyDataSetChanged();
+                        adapter.setOriginalItems(listSheets);
                     }
+                    adapter.notifyDataSetChanged();
 
                     if(listSheets.isEmpty()) {
                         listViewSheets.setVisibility(View.GONE);
@@ -188,5 +205,26 @@ public class MainActivity extends ActionBarActivity {
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    @Override
+    public boolean onClose() {
+        adapter.filterData("");
+        adapter.notifyDataSetChanged();
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        adapter.filterData(query);
+        adapter.notifyDataSetChanged();
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        adapter.filterData(newText);
+        adapter.notifyDataSetChanged();
+        return false;
     }
 }

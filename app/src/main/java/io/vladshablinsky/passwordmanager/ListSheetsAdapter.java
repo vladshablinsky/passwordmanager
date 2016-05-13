@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.vladshablinsky.passwordmanager.R;
@@ -18,11 +19,27 @@ import io.vladshablinsky.passwordmanager.Sheet;
 public class ListSheetsAdapter extends BaseAdapter {
 
     private List<Sheet> items;
+    private List<Sheet> originalItems;
     private LayoutInflater inflater;
+    private String lastFilter = "";
 
     public ListSheetsAdapter(Context context, List<Sheet> listSheets) {
-        this.setItems(listSheets);
+        this.originalItems = listSheets;
+        this.items = new ArrayList<>();
+        this.items.addAll(listSheets);
         this.inflater = LayoutInflater.from(context);
+    }
+
+    public void setOriginalItems(List<Sheet> originalItems) {
+        this.originalItems = originalItems;
+        this.items.clear();
+        this.items.addAll(originalItems);
+        filterData(lastFilter);
+    }
+
+    public void deleteItem(Sheet item) {
+        originalItems.remove(item);
+        items.remove(item);
     }
 
     @Override
@@ -79,6 +96,22 @@ public class ListSheetsAdapter extends BaseAdapter {
 
     public void setItems(List<Sheet> items) {
         this.items = items;
+    }
+
+    public void filterData(String query) {
+        query = query.toLowerCase();
+        lastFilter = query;
+        items.clear();
+
+        if (query.isEmpty()) {
+            items.addAll(originalItems);
+        } else {
+            for (Sheet curSheet: originalItems) {
+                if (curSheet.getName().toLowerCase().contains(query)) {
+                    items.add(curSheet);
+                }
+            }
+        }
     }
 
     class ViewHolder {

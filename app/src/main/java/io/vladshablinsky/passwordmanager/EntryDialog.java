@@ -99,7 +99,7 @@ public class EntryDialog extends DialogFragment {
                         entryDAO.modifyEntry(currentEntry, newEntry);
                     }
 
-                    callingActivity.getAdapter().setItems(callingActivity.getListEntries());
+                    callingActivity.getAdapter().updateItem(currentEntry, newEntry);
                     callingActivity.getAdapter().notifyDataSetChanged();
                     EntryDialog.this.dismiss();
                 } else {
@@ -124,7 +124,7 @@ public class EntryDialog extends DialogFragment {
                             callingActivity.getListViewEntries().setVisibility(View.GONE);
                             callingActivity.getTextEmptyListEntries().setVisibility(View.VISIBLE);
                         }
-                        callingActivity.getAdapter().setItems(callingActivity.getListEntries());
+                        callingActivity.getAdapter().deleteItem(currentEntry);
                         callingActivity.getAdapter().notifyDataSetChanged();
                     }
                     EntryDialog.this.dismiss();

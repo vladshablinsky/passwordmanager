@@ -6,6 +6,14 @@
         android:orderInCategory="100" app:showAsAction="never" />
 
     <item
+        android:id="@+id/action_search"
+        android:orderInCategory="1"
+        android:title="@string/search"
+        android:icon="@drawable/ic_search"
+        app:actionViewClass="android.widget.SearchView"
+        app:showAsAction="ifRoom|collapseActionView"/>
+
+    <item
         android:id="@+id/action_add_entry"
         android:icon="@drawable/ic_add"
         android:title="Add new entry"
@@ -13,11 +21,4 @@
         app:showAsAction="always"
         />
 
-    <item
-        android:id="@+id/action_search_entry"
-        android:icon="@drawable/ic_search"
-        android:title="Search among entries"
-        android:orderInCategory="1"
-        app:showAsAction="always"
-        />
 </menu>
