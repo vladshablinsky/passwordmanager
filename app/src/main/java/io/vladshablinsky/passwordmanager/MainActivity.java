@@ -209,22 +209,28 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public boolean onClose() {
-        adapter.filterData("");
-        adapter.notifyDataSetChanged();
+        if (adapter != null) {
+            adapter.filterData("");
+            adapter.notifyDataSetChanged();
+        }
         return false;
     }
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        adapter.filterData(query);
-        adapter.notifyDataSetChanged();
+        if (adapter != null) {
+            adapter.filterData(query);
+            adapter.notifyDataSetChanged();
+        }
         return false;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        adapter.filterData(newText);
-        adapter.notifyDataSetChanged();
+        if (adapter != null) {
+            adapter.filterData(newText);
+            adapter.notifyDataSetChanged();
+        }
         return false;
     }
 }

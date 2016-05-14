@@ -2,8 +2,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="io.vladshablinsky.passwordmanager.ListActivity">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
 
     <item
         android:id="@+id/action_search"
@@ -14,10 +12,18 @@
         app:showAsAction="ifRoom|collapseActionView"/>
 
     <item
+        android:id="@+id/action_export_sheet"
+        android:icon="@drawable/ic_export"
+        android:title="Export sheet"
+        android:orderInCategory="2"
+        app:showAsAction="always"
+        />
+
+    <item
         android:id="@+id/action_add_entry"
         android:icon="@drawable/ic_add"
         android:title="Add new entry"
-        android:orderInCategory="2"
+        android:orderInCategory="3"
         app:showAsAction="always"
         />
 

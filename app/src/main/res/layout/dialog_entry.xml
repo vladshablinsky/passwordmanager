@@ -27,12 +27,22 @@
             android:layout_weight="1" />
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="191dp"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
             android:id="@+id/editEntryText"
-            android:layout_weight="1" />
+            android:layout_weight="0.61" />
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:id="@+id/dialogRandom"
+            android:background="@mipmap/ic_random"
+            android:layout_alignParentTop="true"
+            android:layout_alignLeft="@+id/buttonUpdate"
+            android:layout_alignStart="@+id/buttonUpdate"
+            android:scaleType="center" />
     </LinearLayout>
 
     <RelativeLayout
@@ -44,7 +54,7 @@
             android:layout_height="wrap_content"
             android:text="Delete"
             android:id="@+id/buttonDelete"
-            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
@@ -53,7 +63,7 @@
             android:layout_height="wrap_content"
             android:text="Cancel"
             android:id="@+id/buttonCancel"
-            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true" />
 
         <Button
@@ -61,9 +71,20 @@
             android:layout_height="wrap_content"
             android:text="Update"
             android:id="@+id/buttonUpdate"
-            android:layout_alignParentTop="true"
+            android:layout_alignTop="@+id/buttonCancel"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
+
+        <SeekBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dialogSeekBar"
+            android:layout_alignBottom="@+id/dialogRandom"
+            android:layout_toRightOf="@+id/buttonDelete"
+            android:layout_toStartOf="@+id/buttonUpdate"
+            android:layout_toLeftOf="@+id/buttonUpdate"
+            android:max="20"
+            android:indeterminate="false" />
     </RelativeLayout>
 
 </LinearLayout>

@@ -66,7 +66,9 @@
         android:id="@+id/editEntryPass"
         android:layout_below="@+id/textEntryPass"
         android:layout_alignLeft="@+id/textEntryPass"
-        android:layout_alignStart="@+id/textEntryPass" />
+        android:layout_alignStart="@+id/textEntryPass"
+        android:layout_toLeftOf="@+id/imageRandom"
+        android:layout_toStartOf="@+id/imageRandom" />
 
     <Button
         android:layout_width="wrap_content"
@@ -76,4 +78,37 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="118dp" />
+
+    <ImageView
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:id="@+id/imageRandom"
+        android:background="@mipmap/ic_random"
+        android:scaleType="center"
+        android:contentDescription=""
+        android:layout_alignBottom="@+id/editEntryPass"
+        android:layout_alignRight="@+id/editEntryDescription"
+        android:layout_alignEnd="@+id/editEntryDescription" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Password length"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/editEntryPass"
+        android:layout_alignLeft="@+id/editEntryPass"
+        android:layout_alignStart="@+id/editEntryPass" />
+
+    <SeekBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBar"
+        android:layout_below="@+id/textView2"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignStart="@+id/textView2"
+        android:layout_alignRight="@+id/editEntryDescription"
+        android:layout_alignEnd="@+id/editEntryDescription"
+        android:max="20" />
+
 </RelativeLayout>

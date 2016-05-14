@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +30,8 @@ public class EntryDialog extends DialogFragment {
     private boolean deleteAlreadyClicked = false;
     private Entry currentEntry;
     private int resultCode;
+    private ImageView randomDialog;
+    private SeekBar randomSeekBar;
 
     public static final int CODE_CANCEL = 0;
     public static final int CODE_UPDATE = 1;
@@ -132,6 +136,35 @@ public class EntryDialog extends DialogFragment {
                     deleteAlreadyClicked = true;
                     Toast.makeText(EntryDialog.this.getActivity(), "Tap again to delete", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        this.randomDialog = (ImageView) view.findViewById(R.id.dialogRandom);
+        this.randomSeekBar = (SeekBar) view.findViewById(R.id.dialogSeekBar);
+        this.randomDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int length = 5;
+                if (randomSeekBar != null) {
+                    length += randomSeekBar.getProgress();
+                }
+                editEntryText.setText(AddEntryActivity.getRandomString(length), TextView.BufferType.EDITABLE);
+            }
+        });
+        this.randomSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                editEntryText.setText(AddEntryActivity.getRandomString(progress + 5), TextView.BufferType.EDITABLE);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
             }
         });
 

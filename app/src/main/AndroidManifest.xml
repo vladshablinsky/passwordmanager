@@ -11,7 +11,7 @@
             android:resource="@xml/searchable"/>
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/main_activity_label" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,7 +22,7 @@
         </activity>
         <activity
             android:name=".ListActivity"
-            android:label="@string/title_activity_list"
+            android:label="@string/list_activity_label"
             android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -32,11 +32,11 @@
         </activity>
         <activity
             android:name=".AddSheetActivity"
-            android:label="@string/title_activity_add_sheet" >
+            android:label="@string/add_sheet_label" >
         </activity>
         <activity
             android:name=".AddEntryActivity"
-            android:label="@string/title_activity_add_entry" >
+            android:label="@string/add_entry_label" >
         </activity>
         <activity
             android:name=".EditEntryActivity"

@@ -132,6 +132,22 @@ public class ListActivity extends ActionBarActivity
                 intent.putExtra(AddEntryActivity.EXTRA_SELECTED_MASTER_PASS, sheetPass);
                 startActivityForResult(intent, REQUEST_CODE_ADD_ENTRY);
                 break;
+            case R.id.action_export_sheet:
+                StringBuilder sb = new StringBuilder();
+                if (listEntries.isEmpty()) {
+                    Toast.makeText(this, "Nothing to export.", Toast.LENGTH_LONG).show();
+                    break;
+                }
+                for (Entry entry: listEntries) {
+                    sb.append("Entry name: " + entry.getName() + "\n" +
+                        "Entry password: " + entry.getPass() + "\n\n");
+                }
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, sb.toString());
+                sendIntent.setType("text/plain");
+                startActivity(sendIntent);
+                break;
         }
 
 
@@ -195,22 +211,28 @@ public class ListActivity extends ActionBarActivity
 
     @Override
     public boolean onClose() {
-        adapter.filterData("");
-        adapter.notifyDataSetChanged();
+        if (adapter != null) {
+            adapter.filterData("");
+            adapter.notifyDataSetChanged();
+        }
         return false;
     }
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        adapter.filterData(query);
-        adapter.notifyDataSetChanged();
+        if (adapter != null) {
+            adapter.filterData(query);
+            adapter.notifyDataSetChanged();
+        }
         return false;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        adapter.filterData(newText);
-        adapter.notifyDataSetChanged();
+        if (adapter != null) {
+            adapter.filterData(newText);
+            adapter.notifyDataSetChanged();
+        }
         return false;
     }
 }
