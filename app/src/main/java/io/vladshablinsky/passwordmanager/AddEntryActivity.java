@@ -15,6 +15,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.common.base.MoreObjects;
+
 import java.util.Random;
 
 
@@ -78,13 +80,20 @@ public class AddEntryActivity extends ActionBarActivity {
                         !TextUtils.isEmpty(entryPass) &&
                         entrySheetId != -1) {
                     // TODO ADD PASSWORD
-                    Entry createdEntry = entryDAO.createEntry(
-                            entryName.toString(),
-                            entryPass.toString(),
-                            entrySheetId
-                    );
-                    setResult(RESULT_OK);
-                    finish();
+                    if (entryName.length() > 20 ) {
+                        Toast.makeText(AddEntryActivity.this, "Name cannot be more than 20 symbols long", Toast.LENGTH_LONG).show();
+                    } else if (entryDescription.length() > 40) {
+                        Toast.makeText(AddEntryActivity.this, "Description cannot be more than 40 symbols long", Toast.LENGTH_LONG).show();
+                    } else {
+                        Entry createdEntry = entryDAO.createEntry(
+                                entryName.toString(),
+                                entryPass.toString(),
+                                entrySheetId,
+                                entryDescription.toString()
+                        );
+                        setResult(RESULT_OK);
+                        finish();
+                    }
                 } else {
                     Toast.makeText(AddEntryActivity.this, "Fields must not be empty", Toast.LENGTH_LONG).show();
                 }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PasswordManager</string>
+    <string name="app_name">Password Manager</string>
     <string name="app_label">App Label</string>
     <string name="search_hint">Search hint</string>
     <string name="search">Search</string>
@@ -9,10 +9,14 @@
     <string name="title_activity_add_sheet">AddSheetActivity</string>
     <string name="title_activity_add_entry">AddEntryActivity</string>
     <string name="empty_entries_list">Entry list is empty use add button to add some.</string>
-    <string name="empty_sheets_list">There are no sheets int the list. Use add button to create one.</string>
+    <string name="empty_sheets_list">There are no sheets in the list. Use add button to create one.</string>
     <string name="title_activity_edit_entry">EditEntryActivity</string>
     <string name="main_activity_label">Sheets</string>
     <string name="list_activity_label">Entries</string>
     <string name="add_sheet_label">New sheet</string>
     <string name="add_entry_label">New entry</string>
+    <string name="about">About</string>
+    <string name="about_string">Password Manager.
+        Version 0.0.1.
+        Created by Vlad Shablinsky</string>
 </resources>

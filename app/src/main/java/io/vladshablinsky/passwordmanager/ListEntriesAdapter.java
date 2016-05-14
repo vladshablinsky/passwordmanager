@@ -105,7 +105,7 @@ public class ListEntriesAdapter extends BaseAdapter {
         if (currentItem != null) {
             holder.entryName.setText(currentItem.getName());
             // ADD DESCRIPTION
-            //holder.entryDescription.setText(currentItem);
+            holder.entryDescription.setText(currentItem.getDescription());
             holder.entryPassword.setText(currentItem.getPass());
         }
         return v;

@@ -9,6 +9,7 @@ public class Entry implements Serializable {
     private long id;
     private String name;
     private String pass;
+    private String description;
     private long sheetId;
     private Sheet sheet;
 
@@ -21,15 +22,22 @@ public class Entry implements Serializable {
         this.sheetId = sheet.getId();
     }
 
-
-
-    public Entry(long id, String name, String pass) {
+    public Entry(long id, String name, String pass, String description) {
         this.id = id;
         this.name = name;
         this.pass = pass;
+        this.description = description;
     }
 
     public Entry() {
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public long getId() {

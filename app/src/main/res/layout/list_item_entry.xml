@@ -15,16 +15,19 @@
 
     <TextView
         android:id="@+id/secondLineEntry"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="26dip"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
         android:layout_toRightOf="@id/icon"
         android:ellipsize="marquee"
         android:singleLine="true"
-        android:text="Description"
         android:textSize="12sp"
-        android:textStyle="italic" />
+        android:textStyle="italic"
+        android:layout_toStartOf="@+id/entryPass"
+        android:text="Description"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:layout_alignRight="@+id/entryPass"
+        android:layout_alignEnd="@+id/entryPass" />
 
     <TextView
         android:id="@+id/firstLineEntry"
@@ -36,19 +39,22 @@
         android:gravity="center_vertical"
         android:text="Example application"
         android:textSize="16sp"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:minWidth="100dp" />
 
     <TextView
         android:id="@+id/entryPass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/secondLineEntry"
         android:layout_alignWithParentIfMissing="true"
-        android:layout_toRightOf="@id/firstLineEntry"
         android:layout_alignParentTop="true"
-        android:gravity="right|bottom"
+        android:gravity="right|top"
         android:text="Small Text"
         android:layout_alignParentRight="true"
-        android:enabled="false" />
+        android:enabled="false"
+        android:layout_alignBottom="@+id/secondLineEntry"
+        android:layout_toRightOf="@+id/firstLineEntry"
+        android:layout_toEndOf="@+id/firstLineEntry" />
 
 </RelativeLayout>

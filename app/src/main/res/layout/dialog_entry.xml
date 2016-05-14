@@ -78,13 +78,12 @@
         <SeekBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/dialogSeekBar"
+            android:id="@+id/seekBar2"
             android:layout_alignBottom="@+id/dialogRandom"
             android:layout_toRightOf="@+id/buttonDelete"
             android:layout_toStartOf="@+id/buttonUpdate"
             android:layout_toLeftOf="@+id/buttonUpdate"
-            android:max="20"
-            android:indeterminate="false" />
+            android:max="20" />
     </RelativeLayout>
 
 </LinearLayout>

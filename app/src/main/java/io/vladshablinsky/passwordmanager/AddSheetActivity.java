@@ -50,11 +50,13 @@ public class AddSheetActivity extends ActionBarActivity {
                         !TextUtils.isEmpty(sheetName) &&
                         !TextUtils.isEmpty(sheetPass) &&
                         !TextUtils.isEmpty(sheetPassV) &&
+                        !TextUtils.isEmpty(sheetDescription) &&
                         sheetPassV.toString().equals(sheetPass.toString())
                         ) {
                     Sheet createdSheet = sheetDAO.createSheet(
                          sheetName.toString(),
-                         sheetPass.toString()
+                         sheetPass.toString(),
+                         sheetDescription.toString()
                     );
 
                     Intent intent = new Intent();

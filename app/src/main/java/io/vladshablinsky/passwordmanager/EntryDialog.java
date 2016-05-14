@@ -91,6 +91,7 @@ public class EntryDialog extends DialogFragment {
                     newEntry.setSheet(currentEntry.getSheet());
                     newEntry.setSheetId(currentEntry.getSheetId());
                     newEntry.setPass(entryPass.toString());
+                    newEntry.setDescription(currentEntry.getDescription());
 
                     ListActivity callingActivity = (ListActivity) EntryDialog.this.getActivity();
                     EntryDAO entryDAO = callingActivity.getEntryDAO();
@@ -140,7 +141,7 @@ public class EntryDialog extends DialogFragment {
         });
 
         this.randomDialog = (ImageView) view.findViewById(R.id.dialogRandom);
-        this.randomSeekBar = (SeekBar) view.findViewById(R.id.dialogSeekBar);
+        this.randomSeekBar = (SeekBar) view.findViewById(R.id.seekBar2);
         this.randomDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

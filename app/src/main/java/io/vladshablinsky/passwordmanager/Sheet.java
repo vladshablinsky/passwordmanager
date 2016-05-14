@@ -9,14 +9,25 @@ public class Sheet implements Serializable {
     private long id;
     private String name;
     private String pass;
+    private String description;
 
     Sheet() {
     }
 
 
-    public Sheet(long id, String name) {
+    public Sheet(long id, String name, String pass, String description) {
         this.id = id;
         this.name = name;
+        this.pass = pass;
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public long getId() {

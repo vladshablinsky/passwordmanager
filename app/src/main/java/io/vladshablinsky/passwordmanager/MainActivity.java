@@ -163,6 +163,16 @@ public class MainActivity extends ActionBarActivity
                 Intent intent = new Intent(this, AddSheetActivity.class);
                 startActivityForResult(intent, REQUEST_CODE_ADD_SHEET);
                 break;
+            case R.id.action_settings:
+                new AlertDialog.Builder(this)
+                        .setTitle("About")
+                        .setMessage(getResources().getString(R.string.about_string))
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
         }
 
         //noinspection SimplifiableIfStatement

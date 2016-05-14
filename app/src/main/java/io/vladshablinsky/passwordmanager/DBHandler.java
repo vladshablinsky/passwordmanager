@@ -9,31 +9,35 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class DBHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 6;
     private static final String DATABASE_NAME = "sheets.db";
 
     public static final String TABLE_SHEETS = "sheets";
     public static final String COLUMN_SHEET_ID = "sheet_id";
     public static final String COLUMN_SHEET_NAME = "sheet_name";
     public static final String COLUMN_SHEET_PASS = "sheet_pass";
+    public static final String COLUMN_SHEET_DESC = "sheet_desc";
 
     public static final String TABLE_ENTRIES = "entries";
     public static final String COLUMN_ENTRY_ID = "entry_id";
     public static final String COLUMN_ENTRY_NAME = "entry_name";
     public static final String COLUMN_ENTRY_PASS = "entry_pass";
     public static final String COLUMN_ENTRY_SHEET_ID = "entry_sheet_id";
+    public static final String COLUMN_ENTRY_DESC = "entry_desc";
 
     private static final String SQL_CREATE_TABLE_SHEETS = "CREATE TABLE " + TABLE_SHEETS + " (" +
             COLUMN_SHEET_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COLUMN_SHEET_NAME + " TEXT NOT NULL, " +
-            COLUMN_SHEET_PASS + " TEXT NOT NULL " +
+            COLUMN_SHEET_PASS + " TEXT NOT NULL, " +
+            COLUMN_SHEET_DESC + " TEXT NOT NULL " +
             ");";
 
     private static final String SQL_CREATE_TABLE_ENTRIES = "CREATE TABLE " + TABLE_ENTRIES + " (" +
             COLUMN_ENTRY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COLUMN_ENTRY_NAME + " TEXT NOT NULL, " +
             COLUMN_ENTRY_PASS + " TEXT NOT NULL, " +
-            COLUMN_ENTRY_SHEET_ID + " INTEGER NOT NULL " +
+            COLUMN_ENTRY_SHEET_ID + " INTEGER NOT NULL, " +
+            COLUMN_ENTRY_DESC + " TEXT NOT NULL " +
             ");";
 
 

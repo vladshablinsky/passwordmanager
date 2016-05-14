@@ -85,7 +85,7 @@ public class ListSheetsAdapter extends BaseAdapter {
         Sheet currentItem = getItem(position);
         if (currentItem != null) {
             holder.sheetName.setText(currentItem.getName());
-            holder.description.setText(currentItem.getPass());
+            holder.description.setText(currentItem.getDescription());
         }
         return v;
     }

@@ -22,7 +22,8 @@ public class EntryDAO {
             DBHandler.COLUMN_ENTRY_ID,
             DBHandler.COLUMN_ENTRY_NAME,
             DBHandler.COLUMN_ENTRY_PASS,
-            DBHandler.COLUMN_ENTRY_SHEET_ID
+            DBHandler.COLUMN_ENTRY_SHEET_ID,
+            DBHandler.COLUMN_ENTRY_DESC
     };
     private final String sheetPass;
 
@@ -45,11 +46,13 @@ public class EntryDAO {
         mDbHandler.close();
     }
 
-    public Entry createEntry(String name, String pass, long sheetId) {
+    public Entry createEntry(String name, String pass, long sheetId, String desc) {
         ContentValues values = new ContentValues();
         values.put(DBHandler.COLUMN_ENTRY_NAME, name);
         values.put(DBHandler.COLUMN_ENTRY_PASS, Encryptor.encryptWithKey(sheetPass, pass));
         values.put(DBHandler.COLUMN_ENTRY_SHEET_ID, sheetId);
+        values.put(DBHandler.COLUMN_ENTRY_DESC, desc);
+
         long insertId = mDatabase
                 .insert(DBHandler.TABLE_ENTRIES, null, values);
 
@@ -84,6 +87,7 @@ public class EntryDAO {
         cv.put(DBHandler.COLUMN_ENTRY_NAME, newEntry.getName());
         cv.put(DBHandler.COLUMN_ENTRY_PASS, Encryptor.encryptWithKey(sheetPass, newEntry.getPass()));
         cv.put(DBHandler.COLUMN_ENTRY_SHEET_ID, newEntry.getSheetId());
+        cv.put(DBHandler.COLUMN_ENTRY_PASS, newEntry.getDescription());
         int result = mDatabase.update(DBHandler.TABLE_ENTRIES, cv, DBHandler.COLUMN_ENTRY_ID + " = " + id, null);
     }
 
@@ -142,8 +146,11 @@ public class EntryDAO {
         entry.setId(cursor.getLong(0));
         entry.setName(cursor.getString(1));
         entry.setPass(Encryptor.decryptWithKey(sheetPass, cursor.getString(2)));
+        entry.setDescription(cursor.getString(4));
+
 
         long sheetId = cursor.getLong(3);
+
         SheetDAO dao = new SheetDAO(mContext);
         Sheet sheet = dao.getSheetById(sheetId);
 

@@ -26,7 +26,8 @@ public class SheetDAO {
     private String[] mAllColumns = {
             DBHandler.COLUMN_SHEET_ID,
             DBHandler.COLUMN_SHEET_NAME,
-            DBHandler.COLUMN_SHEET_PASS
+            DBHandler.COLUMN_SHEET_PASS,
+            DBHandler.COLUMN_SHEET_DESC
     };
 
     public SheetDAO(Context context) {
@@ -47,10 +48,11 @@ public class SheetDAO {
         mDbHandler.close();
     }
 
-    public Sheet createSheet(String name, String pass) {
+    public Sheet createSheet(String name, String pass, String desc) {
         ContentValues values = new ContentValues();
         values.put(DBHandler.COLUMN_SHEET_NAME, name);
         values.put(DBHandler.COLUMN_SHEET_PASS, Hashing.sha1().hashString(pass, Charset.defaultCharset()).toString());
+        values.put(DBHandler.COLUMN_SHEET_DESC, desc);
 
         long insertId = mDatabase
                 .insert(
@@ -70,6 +72,7 @@ public class SheetDAO {
         );
         cursor.moveToFirst();
         Sheet newSheet = cursorToSheet(cursor);
+        cursor.close();
         return newSheet;
 
     }
@@ -126,6 +129,7 @@ public class SheetDAO {
         sheet.setId(cursor.getLong(0));
         sheet.setName(cursor.getString(1));
         sheet.setPass(cursor.getString(2));
+        sheet.setDescription(cursor.getString(3));
         return sheet;
     }
 }
