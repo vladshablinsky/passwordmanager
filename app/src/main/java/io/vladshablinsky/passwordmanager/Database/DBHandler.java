@@ -1,4 +1,4 @@
-package io.vladshablinsky.passwordmanager;
+package io.vladshablinsky.passwordmanager.Database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class DBHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 7;
     private static final String DATABASE_NAME = "sheets.db";
 
     public static final String TABLE_SHEETS = "sheets";

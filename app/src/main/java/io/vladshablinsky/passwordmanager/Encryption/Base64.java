@@ -1,4 +1,4 @@
-package io.vladshablinsky.passwordmanager;
+package io.vladshablinsky.passwordmanager.Encryption;
 
 /***************************************************************
 

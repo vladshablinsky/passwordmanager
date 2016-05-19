@@ -1,4 +1,4 @@
-package io.vladshablinsky.passwordmanager;
+package io.vladshablinsky.passwordmanager.Dialogs;
 
 import android.app.DialogFragment;
 import android.os.Bundle;
@@ -16,6 +16,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.Serializable;
+
+import io.vladshablinsky.passwordmanager.Activities.AddEntryActivity;
+import io.vladshablinsky.passwordmanager.Activities.ListActivity;
+import io.vladshablinsky.passwordmanager.Encryption.Helper;
+import io.vladshablinsky.passwordmanager.Entities.Entry;
+import io.vladshablinsky.passwordmanager.Database.EntryDAO;
+import io.vladshablinsky.passwordmanager.R;
 
 /**
  * Created by vlad on 5/12/16.
@@ -36,6 +43,7 @@ public class EntryDialog extends DialogFragment {
     public static final int CODE_CANCEL = 0;
     public static final int CODE_UPDATE = 1;
     public static final int CODE_DELETE = 2;
+    private long lastTimestamp = 0;
 
     public EntryDialog() {
 
@@ -116,7 +124,8 @@ public class EntryDialog extends DialogFragment {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (deleteAlreadyClicked) {
+                long currentTimestamp = System.currentTimeMillis() / 1000;
+                if (currentTimestamp - lastTimestamp < 2) {
                     ListActivity callingActivity = (ListActivity) EntryDialog.this.getActivity();
                     EntryDAO entryDAO = callingActivity.getEntryDAO();
 
@@ -134,9 +143,9 @@ public class EntryDialog extends DialogFragment {
                     }
                     EntryDialog.this.dismiss();
                 } else {
-                    deleteAlreadyClicked = true;
                     Toast.makeText(EntryDialog.this.getActivity(), "Tap again to delete", Toast.LENGTH_SHORT).show();
                 }
+                lastTimestamp = currentTimestamp;
             }
         });
 
@@ -149,13 +158,13 @@ public class EntryDialog extends DialogFragment {
                 if (randomSeekBar != null) {
                     length += randomSeekBar.getProgress();
                 }
-                editEntryText.setText(AddEntryActivity.getRandomString(length), TextView.BufferType.EDITABLE);
+                editEntryText.setText(Helper.getRandomString(length), TextView.BufferType.EDITABLE);
             }
         });
         this.randomSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                editEntryText.setText(AddEntryActivity.getRandomString(progress + 5), TextView.BufferType.EDITABLE);
+                editEntryText.setText(Helper.getRandomString(progress + 5), TextView.BufferType.EDITABLE);
             }
 
             @Override

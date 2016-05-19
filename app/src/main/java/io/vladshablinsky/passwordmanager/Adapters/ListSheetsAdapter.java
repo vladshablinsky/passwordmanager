@@ -1,4 +1,4 @@
-package io.vladshablinsky.passwordmanager;
+package io.vladshablinsky.passwordmanager.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,8 +10,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.vladshablinsky.passwordmanager.Entities.Sheet;
 import io.vladshablinsky.passwordmanager.R;
-import io.vladshablinsky.passwordmanager.Sheet;
 
 /**
  * Created by vlad on 5/11/16.
@@ -63,7 +63,6 @@ public class ListSheetsAdapter extends BaseAdapter {
         if (getItems() != null && !getItems().isEmpty()) {
             return getItems().get(position).getId();
         }
-        // what the heck?
         return position;
     }
 
@@ -81,7 +80,6 @@ public class ListSheetsAdapter extends BaseAdapter {
             holder = (ViewHolder) v.getTag();
         }
 
-        // fill row data
         Sheet currentItem = getItem(position);
         if (currentItem != null) {
             holder.sheetName.setText(currentItem.getName());
@@ -117,6 +115,5 @@ public class ListSheetsAdapter extends BaseAdapter {
     class ViewHolder {
         TextView sheetName;
         TextView description;
-        // TextView sheetPass;
     }
 }

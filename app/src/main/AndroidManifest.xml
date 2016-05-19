@@ -10,8 +10,9 @@
         <meta-data android:name="android.app.searchable"
             android:resource="@xml/searchable"/>
         <activity
-            android:name=".MainActivity"
-            android:label="@string/main_activity_label" >
+            android:name=".Activities.MainActivity"
+            android:label="@string/main_activity_label"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,26 +22,30 @@
             android:resource="@xml/searchable"/>
         </activity>
         <activity
-            android:name=".ListActivity"
+            android:name=".Activities.ListActivity"
             android:label="@string/list_activity_label"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".Activities.MainActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="io.vladshablinsky.passwordmanager.MainActivity" />
+                android:value=".Activities.MainActivity" />
             <meta-data android:name="android.app.searchable"
                 android:resource="@xml/searchable"/>
         </activity>
         <activity
-            android:name=".AddSheetActivity"
-            android:label="@string/add_sheet_label" >
+            android:name=".Activities.AddSheetActivity"
+            android:label="@string/add_sheet_label"
+            android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".AddEntryActivity"
-            android:label="@string/add_entry_label" >
+            android:name=".Activities.AddEntryActivity"
+            android:label="@string/add_entry_label"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".EditEntryActivity"
-            android:label="@string/title_activity_edit_entry" >
+            android:label="@string/title_activity_edit_entry"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

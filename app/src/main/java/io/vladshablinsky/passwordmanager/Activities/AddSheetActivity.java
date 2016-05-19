@@ -1,16 +1,18 @@
-package io.vladshablinsky.passwordmanager;
+package io.vladshablinsky.passwordmanager.Activities;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import io.vladshablinsky.passwordmanager.R;
+import io.vladshablinsky.passwordmanager.Entities.Sheet;
+import io.vladshablinsky.passwordmanager.Database.SheetDAO;
 
 
 public class AddSheetActivity extends ActionBarActivity {
@@ -45,7 +47,6 @@ public class AddSheetActivity extends ActionBarActivity {
                 Editable sheetPass = editSheetPass.getText();
                 Editable sheetPassV = editSheetPassV.getText();
 
-                // TODO description
                 if (
                         !TextUtils.isEmpty(sheetName) &&
                         !TextUtils.isEmpty(sheetPass) &&
@@ -67,9 +68,11 @@ public class AddSheetActivity extends ActionBarActivity {
                     if (TextUtils.isEmpty(sheetName) ||
                             TextUtils.isEmpty(sheetPass) ||
                             TextUtils.isEmpty(sheetPassV)) {
-                        Toast.makeText(AddSheetActivity.this, "Check that the fields are not empty", Toast.LENGTH_LONG).show();
+                        Toast.makeText(AddSheetActivity.this, "Check that the fields are not empty",
+                                Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(AddSheetActivity.this, "Check that the passwords match", Toast.LENGTH_LONG).show();
+                        Toast.makeText(AddSheetActivity.this, "Check that the passwords match",
+                                Toast.LENGTH_LONG).show();
                     }
                 }
             }

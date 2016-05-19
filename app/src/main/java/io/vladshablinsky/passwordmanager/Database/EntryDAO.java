@@ -1,4 +1,4 @@
-package io.vladshablinsky.passwordmanager;
+package io.vladshablinsky.passwordmanager.Database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,6 +8,10 @@ import android.database.sqlite.SQLiteDatabase;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.vladshablinsky.passwordmanager.Encryption.Encryptor;
+import io.vladshablinsky.passwordmanager.Entities.Entry;
+import io.vladshablinsky.passwordmanager.Entities.Sheet;
 
 /**
  * Created by vlad on 5/10/16.
@@ -26,6 +30,7 @@ public class EntryDAO {
             DBHandler.COLUMN_ENTRY_DESC
     };
     private final String sheetPass;
+    private EntryDAO instance;
 
     public EntryDAO(Context context, String sheetPass) {
         mDbHandler = new DBHandler(context);
@@ -87,7 +92,7 @@ public class EntryDAO {
         cv.put(DBHandler.COLUMN_ENTRY_NAME, newEntry.getName());
         cv.put(DBHandler.COLUMN_ENTRY_PASS, Encryptor.encryptWithKey(sheetPass, newEntry.getPass()));
         cv.put(DBHandler.COLUMN_ENTRY_SHEET_ID, newEntry.getSheetId());
-        cv.put(DBHandler.COLUMN_ENTRY_PASS, newEntry.getDescription());
+        cv.put(DBHandler.COLUMN_ENTRY_DESC, newEntry.getDescription());
         int result = mDatabase.update(DBHandler.TABLE_ENTRIES, cv, DBHandler.COLUMN_ENTRY_ID + " = " + id, null);
     }
 
@@ -110,8 +115,6 @@ public class EntryDAO {
             listEntries.add(entry);
             cursor.moveToNext();
         }
-
-        // make sure to close the cursor
         cursor.close();
         return listEntries;
     }
@@ -119,7 +122,6 @@ public class EntryDAO {
     public List<Entry> getEntriesOfSheet(long sheetId) {
         List<Entry> listEntries = new ArrayList<>();
 
-        // TODO CHECK TWICE COLUMN_ENTRY_SHEED_ID!!!!
         Cursor cursor = mDatabase.query(
                 DBHandler.TABLE_ENTRIES,
                 mAllColumns,
@@ -136,7 +138,6 @@ public class EntryDAO {
             listEntries.add(entry);
             cursor.moveToNext();
         }
-        // make sure to close the cursor
         cursor.close();
         return listEntries;
     }

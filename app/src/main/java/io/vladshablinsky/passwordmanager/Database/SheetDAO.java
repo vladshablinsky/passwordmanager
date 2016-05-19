@@ -1,4 +1,4 @@
-package io.vladshablinsky.passwordmanager;
+package io.vladshablinsky.passwordmanager.Database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,10 +8,14 @@ import android.database.sqlite.SQLiteDatabase;
 import com.google.common.hash.Hashing;
 
 import java.nio.charset.Charset;
-import java.security.MessageDigest;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.vladshablinsky.passwordmanager.Database.DBHandler;
+import io.vladshablinsky.passwordmanager.Database.EntryDAO;
+import io.vladshablinsky.passwordmanager.Entities.Entry;
+import io.vladshablinsky.passwordmanager.Entities.Sheet;
 
 /**
  * Created by vlad on 5/10/16.
@@ -79,7 +83,7 @@ public class SheetDAO {
 
     public void deleteSheet(Sheet sheet) {
         long id = sheet.getId();
-        // delete all entries of this sheet
+        // Remove all entries of this sheet
         EntryDAO entryDao = new EntryDAO(mContext, SHEET_EMPTY_PASS);
         List<Entry> listEntries = entryDao.getEntriesOfSheet(id);
         if (listEntries != null && !listEntries.isEmpty()) {
@@ -106,7 +110,6 @@ public class SheetDAO {
                 cursor.moveToNext();
             }
 
-            // make sure to close the cursor
             cursor.close();
         }
         return listSheets;

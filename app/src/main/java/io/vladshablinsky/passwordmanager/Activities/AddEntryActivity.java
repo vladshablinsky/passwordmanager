@@ -1,12 +1,10 @@
-package io.vladshablinsky.passwordmanager;
+package io.vladshablinsky.passwordmanager.Activities;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,9 +13,12 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.common.base.MoreObjects;
-
 import java.util.Random;
+
+import io.vladshablinsky.passwordmanager.Encryption.Helper;
+import io.vladshablinsky.passwordmanager.Entities.Entry;
+import io.vladshablinsky.passwordmanager.Database.EntryDAO;
+import io.vladshablinsky.passwordmanager.R;
 
 
 public class AddEntryActivity extends ActionBarActivity {
@@ -37,19 +38,8 @@ public class AddEntryActivity extends ActionBarActivity {
     public static final String EXTRA_SELECTED_SHEET_ID = "extra_key_selected_entry_sheet_id";
     public static final String EXTRA_SELECTED_MASTER_PASS = "extra_selected_sheet";
 
-    // private Entry selectedEntry;
-
-    private static final String ALLOWED_CHARACTERS ="0123456789qwertyuiopasdfghjklzxcvbnmABCDEFGHIJKLMNOPRSTUVWXYZ";
-
-    protected static String getRandomString(final int sizeOfRandomString)
-    {
-        final Random random = new Random();
-        final StringBuilder sb = new StringBuilder(sizeOfRandomString);
-        for(int i = 0; i < sizeOfRandomString; ++i) {
-            sb.append(ALLOWED_CHARACTERS.charAt(random.nextInt(ALLOWED_CHARACTERS.length())));
-        }
-        return sb.toString();
-    }
+    private static final int MAX_NAME_LENGTH = 20;
+    private static final int MAX_DESC_LENGTH = 40;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,11 +69,13 @@ public class AddEntryActivity extends ActionBarActivity {
                         !TextUtils.isEmpty(entryDescription) &&
                         !TextUtils.isEmpty(entryPass) &&
                         entrySheetId != -1) {
-                    // TODO ADD PASSWORD
-                    if (entryName.length() > 20 ) {
-                        Toast.makeText(AddEntryActivity.this, "Name cannot be more than 20 symbols long", Toast.LENGTH_LONG).show();
-                    } else if (entryDescription.length() > 40) {
-                        Toast.makeText(AddEntryActivity.this, "Description cannot be more than 40 symbols long", Toast.LENGTH_LONG).show();
+
+                    if (entryName.length() > MAX_NAME_LENGTH) {
+                        Toast.makeText(AddEntryActivity.this,
+                                R.string.too_long_name, Toast.LENGTH_LONG).show();
+                    } else if (entryDescription.length() > MAX_DESC_LENGTH) {
+                        Toast.makeText(AddEntryActivity.this,
+                                R.string.too_long_desc, Toast.LENGTH_LONG).show();
                     } else {
                         Entry createdEntry = entryDAO.createEntry(
                                 entryName.toString(),
@@ -95,7 +87,8 @@ public class AddEntryActivity extends ActionBarActivity {
                         finish();
                     }
                 } else {
-                    Toast.makeText(AddEntryActivity.this, "Fields must not be empty", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AddEntryActivity.this, "Fields must not be empty",
+                            Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -108,23 +101,21 @@ public class AddEntryActivity extends ActionBarActivity {
                 if (seekBar != null) {
                     length += seekBar.getProgress();
                 }
-                editEntryPass.setText(AddEntryActivity.getRandomString(length), TextView.BufferType.EDITABLE);
+                editEntryPass.setText(Helper.getRandomString(length), TextView.BufferType.EDITABLE);
             }
         });
         this.seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                editEntryPass.setText(AddEntryActivity.getRandomString(progress + 5), TextView.BufferType.EDITABLE);
+                editEntryPass.setText(Helper.getRandomString(progress + 5), TextView.BufferType.EDITABLE);
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
             }
         });
 

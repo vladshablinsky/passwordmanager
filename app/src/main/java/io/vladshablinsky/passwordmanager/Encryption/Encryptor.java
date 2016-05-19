@@ -1,21 +1,26 @@
-package io.vladshablinsky.passwordmanager;
+package io.vladshablinsky.passwordmanager.Encryption;
 
 /**
  * Created by vlad on 5/13/16.
  */
 
+import java.nio.charset.Charset;
+import java.util.Random;
+
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+
+import io.vladshablinsky.passwordmanager.Encryption.Base64;
 
 public class Encryptor {
 
     private static final String INIT_VECTOR = "RandomInitVector";
 
-    public static String encrypt(String key, String initVector, String value) {
+    public static String encrypt(byte[] key, String initVector, String value) {
         try {
             IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
-            SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
+            SecretKeySpec skeySpec = new SecretKeySpec(key, "AES");
 
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
             cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
@@ -32,10 +37,10 @@ public class Encryptor {
         return null;
     }
 
-    public static String decrypt(String key, String initVector, String encrypted) {
+    public static String decrypt(byte[] key, String initVector, String encrypted) {
         try {
             IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
-            SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
+            SecretKeySpec skeySpec = new SecretKeySpec(key, "AES");
 
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
             cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
@@ -50,12 +55,13 @@ public class Encryptor {
         return null;
     }
 
-    private static String paddedKey(String s) {
-        StringBuilder sb = new StringBuilder("aaaabbbbccccdddd");
-        for (int i = 0; i < Math.min(s.length(), 16); ++i) {
-            sb.setCharAt(i, s.charAt(i));
+    private static byte[] paddedKey(String s) {
+        byte a[] = "aaaabbbbccccdddd".getBytes(Charset.forName("UTF8"));
+        byte b[] = s.getBytes(Charset.forName("UTF8"));
+        for (int i = 0; i < Math.min(b.length, 16); ++i) {
+            a[i] = b[i];
         }
-        return sb.toString();
+        return a;
     }
 
     public static String encryptWithKey(String key, String text) {
@@ -68,6 +74,7 @@ public class Encryptor {
 
     public static void main(String[] args) {
         String key = "aaaabbbbccccfsadfsaddddd"; // 128 bit key
-        System.out.println(decryptWithKey(key, encryptWithKey(key, "Hello World")));
+        System.out.println(encryptWithKey("pass", "abacabadabadfjasdlkfj;adskfasdHellofdsafajlkfjasWorld"));
     }
+
 }

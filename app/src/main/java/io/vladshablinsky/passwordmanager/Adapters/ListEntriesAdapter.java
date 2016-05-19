@@ -1,21 +1,25 @@
-package io.vladshablinsky.passwordmanager;
+package io.vladshablinsky.passwordmanager.Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import io.vladshablinsky.passwordmanager.Entities.Entry;
+import io.vladshablinsky.passwordmanager.R;
 
 /**
  * Created by vlad on 5/11/16.
  */
 public class ListEntriesAdapter extends BaseAdapter {
+
+    private static final String TAG = ListEntriesAdapter.class.getName();
 
     private List<Entry> items;
     private List<Entry> originalItems;
@@ -104,8 +108,8 @@ public class ListEntriesAdapter extends BaseAdapter {
         Entry currentItem = getItem(position);
         if (currentItem != null) {
             holder.entryName.setText(currentItem.getName());
-            // ADD DESCRIPTION
             holder.entryDescription.setText(currentItem.getDescription());
+            // System.out.println("PASSWORD OF CURRENT ITEM IS " + currentItem.getPass());
             holder.entryPassword.setText(currentItem.getPass());
         }
         return v;

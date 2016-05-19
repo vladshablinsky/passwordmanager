@@ -1,4 +1,4 @@
-package io.vladshablinsky.passwordmanager;
+package io.vladshablinsky.passwordmanager.Activities;
 
 import android.app.AlertDialog;
 import android.app.SearchManager;
@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +19,12 @@ import android.widget.SearchView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.vladshablinsky.passwordmanager.Adapters.ListSheetsAdapter;
+import io.vladshablinsky.passwordmanager.Dialogs.ProxySheetEntryDialog;
+import io.vladshablinsky.passwordmanager.R;
+import io.vladshablinsky.passwordmanager.Entities.Sheet;
+import io.vladshablinsky.passwordmanager.Database.SheetDAO;
 
 
 public class MainActivity extends ActionBarActivity
@@ -67,17 +72,17 @@ public class MainActivity extends ActionBarActivity
         alertDialogBuilder.setTitle("Delete");
         alertDialogBuilder.setMessage("Are you sure you want to delete the \""+clickedSheet.getName()+"\" sheet ?");
 
-        // set positive button YES message
+        // Set positive button YES message
         alertDialogBuilder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // delete the company and refresh the list
+                // Delete the company and refresh the list
                 if(sheetDAO != null) {
                     sheetDAO.deleteSheet(clickedSheet);
                     listSheets.remove(clickedSheet);
 
-                    //refresh the listView
+                    // Refresh the listView
                     if(listSheets.isEmpty()) {
                         listViewSheets.setVisibility(View.GONE);
                         textEmptyListSheets.setVisibility(View.VISIBLE);
@@ -91,7 +96,7 @@ public class MainActivity extends ActionBarActivity
             }
         });
 
-        // set neutral button OK
+        // Set neutral button OK
         alertDialogBuilder.setNeutralButton(android.R.string.no, new DialogInterface.OnClickListener() {
 
             @Override
@@ -102,7 +107,7 @@ public class MainActivity extends ActionBarActivity
         });
 
         AlertDialog alertDialog = alertDialogBuilder.create();
-        // show alert
+        // Show alert
         alertDialog.show();
     }
 
@@ -116,11 +121,8 @@ public class MainActivity extends ActionBarActivity
         sheetDAO = new SheetDAO(this);
 
         initViews();
-        System.out.println("AFTER INIT VIEWS");
 
         searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-
-        // fill the listView
 
         listSheets = sheetDAO.getAllSheets();
         if ((listSheets != null) && !listSheets.isEmpty()) {
@@ -175,7 +177,6 @@ public class MainActivity extends ActionBarActivity
                         .show();
         }
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }

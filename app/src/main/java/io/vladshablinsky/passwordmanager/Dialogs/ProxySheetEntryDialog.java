@@ -1,4 +1,4 @@
-package io.vladshablinsky.passwordmanager;
+package io.vladshablinsky.passwordmanager.Dialogs;
 
 import android.app.DialogFragment;
 import android.content.Intent;
@@ -16,6 +16,11 @@ import android.widget.Toast;
 import com.google.common.hash.Hashing;
 
 import java.nio.charset.Charset;
+
+import io.vladshablinsky.passwordmanager.Activities.ListActivity;
+import io.vladshablinsky.passwordmanager.Activities.MainActivity;
+import io.vladshablinsky.passwordmanager.Entities.Sheet;
+import io.vladshablinsky.passwordmanager.R;
 
 /**
  * Created by vlad on 5/13/16.

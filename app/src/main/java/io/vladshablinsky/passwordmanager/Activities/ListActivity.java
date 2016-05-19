@@ -1,6 +1,5 @@
-package io.vladshablinsky.passwordmanager;
+package io.vladshablinsky.passwordmanager.Activities;
 
-import android.app.FragmentManager;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -14,14 +13,17 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import io.vladshablinsky.passwordmanager.Entities.Entry;
+import io.vladshablinsky.passwordmanager.Database.EntryDAO;
+import io.vladshablinsky.passwordmanager.Dialogs.EntryDialog;
+import io.vladshablinsky.passwordmanager.Adapters.ListEntriesAdapter;
+import io.vladshablinsky.passwordmanager.R;
 
 
 public class ListActivity extends ActionBarActivity
@@ -34,7 +36,6 @@ public class ListActivity extends ActionBarActivity
     private SearchManager searchManager;
     private MenuItem searchItem;
 
-    // adapter
     private List<Entry> listEntries;
     private EntryDAO entryDAO;
     private long sheetId;
@@ -47,11 +48,8 @@ public class ListActivity extends ActionBarActivity
     public static final String EXTRA_SHEET_MASTER_PASS = "extra_sheet_master_pass";
 
     private void initViews() {
-        // add listeners here and other things.
         this.listViewEntries = (ListView) findViewById(R.id.listViewEntries);
         this.textEmptyListEntries = (TextView) findViewById(R.id.textViewEntries);
-        // same for empty text
-        // add listeners to the listView itself
         this.listViewEntries.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -84,7 +82,6 @@ public class ListActivity extends ActionBarActivity
         if (sheetId != -1) {
             listEntries = entryDAO.getEntriesOfSheet(sheetId);
             if (listEntries != null && !listEntries.isEmpty()) {
-                // TODO implement adaptor for passwords
                 adapter = new ListEntriesAdapter(this, listEntries);
                 listViewEntries.setAdapter(adapter);
 
@@ -100,7 +97,6 @@ public class ListActivity extends ActionBarActivity
 
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -150,8 +146,6 @@ public class ListActivity extends ActionBarActivity
                 break;
         }
 
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }

@@ -1,35 +1,25 @@
-package io.vladshablinsky.passwordmanager;
+package io.vladshablinsky.passwordmanager.Entities;
 
 import java.io.Serializable;
 
 /**
  * Created by vlad on 5/10/16.
  */
-public class Entry implements Serializable {
+public class Sheet implements Serializable {
     private long id;
     private String name;
     private String pass;
     private String description;
-    private long sheetId;
-    private Sheet sheet;
 
-    public Sheet getSheet() {
-        return sheet;
+    public Sheet() {
     }
 
-    public void setSheet(Sheet sheet) {
-        this.sheet = sheet;
-        this.sheetId = sheet.getId();
-    }
 
-    public Entry(long id, String name, String pass, String description) {
+    public Sheet(long id, String name, String pass, String description) {
         this.id = id;
         this.name = name;
         this.pass = pass;
         this.description = description;
-    }
-
-    public Entry() {
     }
 
     public String getDescription() {
@@ -48,14 +38,6 @@ public class Entry implements Serializable {
         this.id = id;
     }
 
-    public long getListID() {
-        return sheetId;
-    }
-
-    public void setSheetId(long sheetId) {
-        this.sheetId = sheetId;
-    }
-
     public String getName() {
         return name;
     }
@@ -70,9 +52,5 @@ public class Entry implements Serializable {
 
     public void setPass(String pass) {
         this.pass = pass;
-    }
-
-    public long getSheetId() {
-        return sheetId;
     }
 }

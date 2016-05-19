@@ -16,6 +16,8 @@
     <string name="add_sheet_label">New sheet</string>
     <string name="add_entry_label">New entry</string>
     <string name="about">About</string>
+    <string name="too_long_name">Name cannot be more than 20 symbols long</string>
+    <string name="too_long_desc">Description cannot be more than 40 symbols long"</string>
     <string name="about_string">Password Manager.
         Version 0.0.1.
         Created by Vlad Shablinsky</string>
